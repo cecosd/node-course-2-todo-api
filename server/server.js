@@ -19,6 +19,8 @@ var {
 
 var app = express();
 var port = process.env.PORT || 3000;
+console.log('PORT to check is', port);
+console.log('PROCESS ENV', JSON.stringify(process.env));
 
 app.use(bodyParser.json());
 
