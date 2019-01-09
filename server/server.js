@@ -66,7 +66,7 @@ app.post('/todos', (request, response) => {
         });
 
     }).catch((error) => {
-        return response.status(4000).send(error);
+        return response.status(400).send(error);
     });
 });
 
@@ -150,6 +150,18 @@ app.get('/users', (request, response) => {
         });
     }, (error) => {
         response.status(400).send(error);
+    });
+});
+
+app.post('/users', (request, response) => {
+    var body = _.pick(request.body, ['email', 'password']);
+
+    var user = new User(body);
+
+    user.save().then((doc) => {
+        return response.status(200).send(doc);
+    }).catch((error) => {
+        return response.status(404).send(error)
     });
 });
 
