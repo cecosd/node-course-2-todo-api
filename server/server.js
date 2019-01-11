@@ -18,6 +18,8 @@ require("./db/mongoose");
 var Todo = require("./models/todo");
 // User
 var User = require("./models/user");
+// middlewares
+var authenticate = require("./middleware/authenticate");
 
 var app = express();
 var port = process.env.PORT;
@@ -173,11 +175,13 @@ app.get("/users", (request, response) => {
     );
 });
 
+app.get('/user/me', authenticate, (request, response) => {
+    response.send(request.user);
+});
+
 app.post("/users", (request, response) => {
     var body = _.pick(request.body, ["email", "password"]);
     var user = new User(body);
-
-
 
     user
         .save()
